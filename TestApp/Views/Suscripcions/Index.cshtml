@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TestApp.Models.Suscripcion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Suscriptor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaAlta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotivoFin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suscriptor.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAlta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotivoFin)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAsociacion">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAsociacion">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAsociacion">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

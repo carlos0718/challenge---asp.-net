@@ -1,0 +1,122 @@
+﻿@model IEnumerable<TestApp.Models.Suscriptor>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+     <h1>Suscripción</h1>
+    <spam>Para realizar la suscripción complete los siguientes datos</spam>
+    <h2>Buscar Suscriptor</h2>
+    <form asp-controller="Suscriptors" asp-action="Index" method="get">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Tipo Documento</label>
+                <select class="form-select" name="tipo">
+                  <option selected value="">Tipo de documento</option>
+                  @{
+                      foreach (var item in (List<string>)ViewData["Tipo"]) {
+                        
+                            <option value="@item" >@item</option>
+                        }
+                  }
+                </select>
+            </div>
+             <div class="col-md-4">
+                <label>Número de Documento</label>
+                <div>
+                    <input type="text" id="txtDocumeto" name="numero" class="form-control"/>
+                </div>
+            </div>
+            <div class="col-md-4 mt-4">
+                <button class="btn btn-success" id="btnBuscar" type="submit">Buscar</button>
+                <button class="btn btn-primary" name="nuevo" value="true" type="submit" asp-controller="Suscriptors" asp-action="Create">Nuevo</button>
+            </div>
+        </div>
+        @if(!String.IsNullOrEmpty((string)ViewData["Alert"])){
+                <script> alert("@ViewData["Alert"]")</script>
+        }
+    </form>
+    <h2>Datos del Suscriptor</h2>
+    @if(Model?.Count() > 0 && Model != null){
+
+        foreach(var item in Model) {
+        
+            <form asp-controller="Suscriptors" asp-action="Index" method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Nombre</label>
+                        <div>
+                            <input type="text" id="txtNombre" class="form-control" value="@Html.DisplayFor(itemModel => item.Nombre)" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Apellido</label>
+                        <div>
+                            <input type="text" id="txtApellido" class="form-control" value="@Html.DisplayFor(itemModel => item.Apellido)" disabled/>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                         
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Dirección</label>
+                        <div>
+                            <input type="text" id="txtDireccion" class="form-control" value="@Html.DisplayFor(itemModel => item.Direccion)" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Email</label>
+                        <div>
+                            <input type="email" id="txtEmail" class="form-control" value="@Html.DisplayFor(itemModel => item.Email)" disabled/>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                          <button class="btn btn-info" asp-action="Edit" asp-route-id="@item.SuscriptorId">Modificar</button>                  
+                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Telefono</label>
+                        <div>
+                           <input type="text" id="txtTelefono" class="form-control" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Estado</label>
+                        <div>
+                           <input type="text" id="txtEstado" class="form-control" value="@ViewData["Estado"]" disabled/>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                                  <button class="btn @(ViewData["Estado"] == "Suscripto" ? "btn-danger" : "btn-success")" 
+                                    asp-action="Suscription" 
+                            asp-route-id="@item.SuscriptorId" disabled=@(ViewData["Estado"] == "Suscripto")>
+                                     Registrar suscripción
+                         </button>
+                     </div> 
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Nombre de usuario</label>
+                        <div>
+                            <input type="text" id="txtNombreUsuario" class="form-control" value="@Html.DisplayFor(itemModel => item.NombreUsuario)" disabled/>
+                
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contraseña</label>
+                        <div>
+                            <input type="password" id="txtPassword" class="form-control" value="@Html.DisplayFor(itemModel => item.PasswordUsuario)" disabled/>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <button class="btn btn-warning" id="btnCancelar">Cancelar</button>
+                    </div>
+                </div>
+                <br />
+            </form>       
+        }
+    }
+</div>
